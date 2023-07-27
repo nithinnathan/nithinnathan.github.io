@@ -1,86 +1,87 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Narrative Visualization with D3, d3-annotation, and topoJSON</title>
-  <style>
-    /* Add any custom CSS styles here if needed */
-    body {
-      font-family: Arial, sans-serif;
-    }
-    .map {
-      border: 1px solid #ccc;
-    }
-    .annotation {
-      font-size: 12px;
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body>
-  <h1>Narrative Visualization Example</h1>
-  <div class="map"></div>
-
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="https://unpkg.com/d3-annotation"></script>
-  <script src="https://unpkg.com/topojson-client@3.1.0"></script>
-  <script>
-    // Your JavaScript code for the narrative visualization
-    // Replace this with your own data and annotations
-
-    // Sample data - replace this with your own dataset
-    const data = [
-      { country: 'USA', value: 120 },
-      { country: 'Canada', value: 90 },
-      { country: 'UK', value: 80 },
-      { country: 'Germany', value: 70 },
-      { country: 'Japan', value: 50 },
-    ];
-
-    // Sample annotations - replace this with your own annotations
-    const annotations = [
-      { country: 'USA', note: 'Annotation for USA', dx: 50, dy: -50 },
-      { country: 'Germany', note: 'Annotation for Germany', dx: 80, dy: 30 },
-    ];
-
-    // Width and height of the map container
-    const width = 600;
-    const height = 400;
-
-    // Create the SVG element for the map
-    const svg = d3.select('.map')
-      .append('svg')
-      .attr('width', width)
-      .attr('height', height);
-
-    // Load the map data using topoJSON
-    d3.json('world_map.json').then((mapData) => {
-      const countries = topojson.feature(mapData, mapData.objects.countries);
-
-      // Create a projection for the map
-      const projection = d3.geoMercator().fitSize([width, height], countries);
-      const path = d3.geoPath().projection(projection);
-
-      // Draw the map
-      svg.selectAll('.country')
-        .data(countries.features)
-        .enter()
-        .append('path')
-        .attr('class', 'country')
-        .attr('d', path);
-
-      // Add annotations
-      const makeAnnotations = d3.annotation()
-        .type(d3.annotationLabel)
-        .accessors({
-          x: d => projection([d.longitude, d.latitude])[0],
-          y: d => projection([d.longitude, d.latitude])[1],
-        })
-        .annotations(annotations);
-
-      svg.append('g')
-        .attr('class', 'annotation-group')
-        .call(makeAnnotations);
-    });
-  </script>
-</body>
+    <head>
+        <title>CS 416: Narrative Visualization - Nithin Nathan</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="CS 416: Narrative Visualization - Nithin Nathan">
+        <meta name="author" content="Nithin Nathan">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="mystyle.css">
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.3.1/d3-annotation.min.js"></script>
+        <base href="index.html" target="_blank">
+    </head>
+    <!-- <body>
+        <h3 align=left>India At-a-Glance: how the Earth's fastest growing economy fairing against the world</h3>
+        <p align=left>With 1.2 billion people and the world’s third-largest economy in purchasing power parity terms, India’s recent growth has been a significant achievement. Since independence in 1947, a landmark agricultural revolution has transformed the nation from chronic dependence on grain imports into an agricultural powerhouse that is now a net exporter of food.</p>
+        <p align=left><i>Data Courtesy: All the information are shared by World Bank (<a href='https://data.worldbank.org/country/india'>https://data.worldbank.org/country/india</a>)</i></p>
+        <div class="move">
+            <center>
+                <p>Use the navigation buttons below to explore different visualizations that showcase India's socio-economic factors compared againts the world.</p>
+                <a href="#" class="currentpage">Home</a>
+                <a href="life_exp.html" class="otherpage">Life Expectancy</a>
+                <a href="population.html" class="otherpage">Population</a>
+                <a href="gdp_capita.html" class="otherpage">GDP per Capita</a>
+                <a href="gdp_growth.html" class="otherpage">GDP Growth %</a>
+                <a href="conclusion.html" class="otherpage">Conclusion</a>
+            </center>
+        </div>
+        <hr>
+            <div>
+                <h4>
+                    Overview:
+                </h4>
+                <p>
+                    I have implemented 'Interactive Slideshow' as the narrative visualization structures.<br>
+                    You can click the buttons on the top to navigate to other pages that showcase other detailed information. Each of the 4 major sections (middle buttons) compares India's performance against the world on the respective Socio-Economic factor. The last section highlights some of the major milestones and iconic landmarks in India over the last 75 years.<br>
+                    As you navigate through these pages, you will see a narrative along with the metric for India compared with the World.<br>
+                </p>
+                <h4>
+                    Messaging:
+                </h4>
+                <p>
+                    It is well known that India is still a developing country and for number of good reasons. Its large, diverse, was under British rule for close to 100 years, was under extreme poverty for decades. India has faced famines, major droughts, epidemics and natural calamities. But the country has overcome all these hindrences and showcased thier capabilities in Global platform. My narrative highlights how India's some major socio-economic factors are compared to the world.<br>
+                    My objective is to highlight some metrics that puts India at per with the rest of the world.
+                </p>
+                <h4>
+                    Narrative Structure: Interactive Slideshow
+                </h4>
+                <p>
+                    You can follow the above buttons from left to right to follow the "steps" as it goes to the next pages. This is
+                    interactive slideshow because there are "drill-down" pages to narrow down some information.
+                </p>
+                <h4>
+                    Visual Structure:
+                </h4>
+                <p>
+                    Each scene (each socio-economic metric above) has a line graph, and the structure is consistent across the pages. You will be able to understand the data from the texts on X and Y axis, descriptions in the title, tooltips and annotations. It would be easy to stay  focused on the presented data on each scene.<br>
+                    The same buttons are present in each scene, that will help you navigate through this whole presentation, and will give you a seamless experince from the left to right without getting lost in information.
+                </p>
+                <h4>
+                    Scenes:
+                </h4>
+                <p>
+                    Scenes contain 4 buttons on the top of the page to see the metrics' comparison. Home button will bring you at this page. Conslusion page contains some information that augments my thought.<br>
+                    These 4 scenes for metrics, follow a consistent format, with a single line chart at the top along with some narrative.
+                    The annotation template contains texts and pointers to pinpoint the location that I would like to emphasize in the line graph. The annotations especially support certain data points. For example, I used one to deliver the message where the growth was curbed due to impact of COVID in India. Some annotations change since the trends are changed and I would like to put emphasis on the increased or decreased values.
+                </p>
+                <h4>
+                    Parameters:
+                </h4>
+                <p>
+                    My parameters are variables, which is chart years in populations, and animated bar charts and top of
+                    options as slide numbers. Viewers can see the parameters on the top of each page.<br>
+                </p>
+                <h4>
+                    Triggers:
+                </h4>
+                <p>
+                    My triggers are used a connector to the next chart or page to change the parameters. My triggers are buttons and hovering over the bar graph to display the details information.
+                </p>
+            </div>
+        <hr>
+        <div>
+            <p align=center>Contact: ratuls2@illinois.edu</p>
+        </div>
+    </body> -->
 </html>
