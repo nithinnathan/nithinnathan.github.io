@@ -31,22 +31,12 @@
 
         <script>
         
-            // set the dimensions and margins of the graph
-            var margin = {top: 10, right: 30, bottom: 30, left: 60},
-                width = 660 - margin.left - margin.right,
-                height = 400 - margin.top - margin.bottom;
+            var margin = { left: 60, right: 30, top: 10, bottom: 30 };
+            var width = 500 - margin.left - margin.right;
+            var height = 500 - margin.top - margin.bottom;
             
-            // append the svg object to the body of the page
-            var svg = d3.select("#fatalities")
-                .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform",
-                        "translate(" + margin.left + "," + margin.top + ")");
-            
-            //Read the data
-            d3.csv("https://github.com/nithinnathan/nithinnathan.github.io/blob/c3b233d638921f09af2e02570f577d1c59f23b8d/fatalities.csv", function(data) {
+            d3.csv("https://github.com/nithinnathan/nithinnathan.github.io/blob/master/fatalities.csv", function(data)
+            {
             
                 // group the data: I want to draw one line per group
                 // var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
@@ -54,22 +44,34 @@
                 // .entries(data);
                 //document.getElementById("data").innerHTML = sumstat;
                 //console.log(sumstat);
+
+                
             
-                // Add X axis --> it is a date format
                 var x = d3.scaleLinear()
-                .domain(d3.extent(data, function(d) { return d.Year; }))
-                .range([ 0, width ]);
-                svg.append("g")
-                .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")))
-                ;
-            
-                // Add Y axis
+                .domain([1982,2023])
+                .range([0,500]);
+
                 var y = d3.scaleLinear()
-                .domain([50, d3.max(data, function(d) { return +d.Life_Exp; })])
-                .range([ height, 0 ]);
-                svg.append("g")
-                .call(d3.axisLeft(y).ticks(10));
+                .domain([0,120])
+                .range([500,0]);
+
+                var xAxis = d3.axisBottom(x);
+
+                var yAxis = d3.axisLeft(y);
+
+                var line = d3.line()
+                            .x(function(d) { return x(d.Year) })
+                            .y(function(d) { return y(d.Fatalities) });
+
+                // append the svg object to the body of the page
+                var svg = d3.select("#fatalities")
+                .append("svg")
+                .attr("id", "svg")
+                .attr("width", "100%")
+                .attr("height", "100%");
+
+                var chartGroup = svg.append("g").attr("class")
+                
                     
                 // color palette
                 //var res = sumstat.map(function(d){ return d.key }) // list of group names
@@ -84,15 +86,13 @@
                 //console.log(tooltip1);
             
                 // Draw the line
-                svg.selectAll(".line")
+                svg.selectAll("line")
                     .data(data)
                     .enter()
                     .append("path")
-                    .attr("fill", "none")
-                    // .attr("stroke", function(d){ return color(d.key) })
-                    .attr("stroke-dasharray", function(d,i){ return i })
+                    .attr("fill", "none")// .attr("stroke", function(d){ return color(d.key) }//.attr("stroke-dasharray", function(d,i){ return i })
                     .attr("stroke-width", 2.5)
-                    .attr("d", function(d){
+                    .attr("d", function(d) {
                         return d3.line()
                         .x(function(d) { return x(d.Year); })
                         .y(function(d) { return y(+d.Fatalities); })
