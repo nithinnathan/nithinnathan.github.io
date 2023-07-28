@@ -31,6 +31,7 @@
         <script>
         
             d3.csv("https://raw.githubusercontent.com/nithinnathan/nithinnathan.github.io/master/fatalities.csv")
+            .row(function(d) { return { year: d.Year, fatalities: d.Fatalities} })
             .get(function(error, data) {
                 console.log(data);
             });
