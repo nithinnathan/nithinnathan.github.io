@@ -41,29 +41,35 @@
   
 a {
   text-decoration: none;
+  letter-spacing: 5px;
   display: inline-block;
   padding: 8px 16px;
 }
 
 a:hover {
   background-color: #ddd;
+  letter-spacing: 5px;
   color: black;
 }
 
 .current {
   background-color: #f1f1f1;
+  letter-spacing: 5px;
   color: black;
 }
 
 .other {
   background-color: #04AA6D;
+  letter-spacing: 5px;
   color: white;
 }
 
 .round {
-  border-radius: 50%;
+  border: 2px solid red;
+  border-radius: 12px;
+  padding: 5px;
 }
 
 body {
-  font-family: "Georgia";
+  font-family: "Helvetica";
 }
