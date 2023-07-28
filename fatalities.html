@@ -33,7 +33,34 @@
             d3.csv("https://raw.githubusercontent.com/nithinnathan/nithinnathan.github.io/master/fatalities.csv")
             .row(function(d) { return { year: d.Year, fatalities: d.Fatalities} })
             .get(function(error, data) {
-                console.log(data);
+
+                var height = 400;
+                var width = 600;
+
+                var maxYear = d3.max(data, function(d) { return d.Year; });
+                var minYear = d3.min(data, function(d) { return d.Year; });
+                var maxFatalities = d3.max(data, function(d) { return d.Fatalities; });
+
+                var y = d3.scaleLinear().domain([0,maxFatalities]).range([height,0]);
+                var x = d3.scaleLinear().domain([minYear,maxYear]).range([0,width]);
+
+                var yAxis = d3.axisLeft(y);
+                var xAxis = d3.axisBottom(x);
+
+                var svg = d3.select('fatalities').append('svg')
+                            .attr('height','100%')
+                            .attr('width','100%');
+
+                var chartGroup = svg.append('g')
+                                    .attr('transform','translate(50,50)');
+
+                var line = d3.line()
+                            .x(function(d) { return x(d.Year); })
+                            .y(function(d) { return x(d.Fatalities); });
+
+                chartGroup.append('path')
+                            .attr('d',line(data));
+                
             });
         
         </script>
