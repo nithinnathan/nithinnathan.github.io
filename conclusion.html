@@ -1,112 +1,80 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <title>Line chart from CSV using d3.js</title>
-    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-    <style>
-
-	    html, body {
-		    margin: 0;
-		    padding: 0;
-		    height: 100%;
-		    width: 100%;
-	    }
-
-	    text {
-		    font-family: arial;
-		    font-size: 12px;
-	    }
-
-
-	    path.line {
-		    fill: none;
-		    stroke: red;
-		    stroke-width: 3px;
-	    }
-
-		.axis path,
-		.axis line {
-		  fill: none;
-		  stroke: slategray;
-		  shape-rendering: crispEdges;
-		}
-    </style>
-  </head>
-  <body>
-
-	<script type="text/javascript">
-
-var parseDate = d3.timeParse("%m/%d/%Y");
-
-var margin = {left: 50, right: 20, top: 20, bottom: 50 };
-
-var width = 960 - margin.left - margin.right;
-var height = 500 - margin.top - margin.bottom;
-
-
-var max = 0;
-
-var xNudge = 50;
-var yNudge = 20;
-
-var minDate = new Date();
-var maxDate = new Date();
-
-
-
-
-d3.csv("https://github.com/nithinnathan/nithinnathan.github.io/blob/master/fatalities.csv")
-    .row(function(d) { return { year: parseDate(d.Year), fatalities: Number(d.Fatalities.trim().slice(1))}; })
-    .get(function(error, rows) {
-	    max = d3.max(rows, function(d) { return d.Fatalities; });
-	    minDate = d3.min(rows, function(d) {return d.Year; });
-		maxDate = d3.max(rows, function(d) { return d.Year; });
-
-
-		var y = d3.scaleLinear()
-					.domain([0,max])
-					.range([height,0]);
-
-		var x = d3.scaleTime()
-					.domain([minDate,maxDate])
-					.range([0,width]);
-
-		var yAxis = d3.axisLeft(y);
-
-		var xAxis = d3.axisBottom(x);
-
-		var line = d3.line()
-			.x(function(d){ return x(d.Year); })
-			.y(function(d){ return y(d.Fatalities); })
-			.curve(d3.curveCardinal);
-
-
-		var svg = d3.select("body").append("svg").attr("id","svg").attr("height","100%").attr("width","100%");
-		var chartGroup = svg.append("g").attr("class","chartGroup").attr("transform","translate("+xNudge+","+yNudge+")");
-
-		chartGroup.append("path")
-			.attr("class","line")
-			.attr("d",function(d){ return line(rows); })
-
-
-		chartGroup.append("g")
-			.attr("class","axis x")
-			.attr("transform","translate(0,"+height+")")
-			.call(xAxis);
-
-		chartGroup.append("g")
-			.attr("class","axis y")
-			.call(yAxis);
-
-
-
-	});
-
-
-
-
-
-	</script>
-  </body>
+    <head>
+        <title>CS 416: Narrative Visualization - Nithin Nathan</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="CS 416: Narrative Visualization - Nithin Nathan">
+        <meta name="author" content="Nithin Nathan">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="mystyle.css">
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.3.1/d3-annotation.min.js"></script>
+    </head>
+    <body>
+        <h1 align="center">U.S. Gun Violence From the 1980s to the 2020s</h1>
+        <p align="left">Gun ownership in the United States is the highest in the world, and constitutionally protected by the Second Amendment to the United States Constitution. Firearms are widely used in the United States for self-defence, hunting, and recreational uses, such as target shooting.</p>
+        <!-- <p align="left">Source:<a href='https://www.kaggle.com/datasets/nidzsharma/us-mass-shootings-19822023' target="_blank" rel="noreferrer noopener">https://www.kaggle.com/datasets/nidzsharma/us-mass-shootings-19822023</a></p> -->
+        <div align="center">
+            <p>The buttons below will help you explore and understand some metrics of the number of individuals affected by gun violence in the United States across 5 decades.</p>
+            <a href="index.html" class="other">Home</a>
+            <a href="fatalities.html" class="other">Fatalities</a>
+            <a href="injured.html" class="other">Injured</a>
+            <a href="total_victims.html" class="other">Total Victims</a>
+            <a href="#" class="current">Conclusion</a>
+        </div>
+        <!-- <hr>
+            <div>
+                <h4>
+                    Overview:
+                </h4>
+                <p>
+                    I have implemented 'Interactive Slideshow' as the narrative visualization structures.<br>
+                    You can click the buttons on the top to navigate to other pages that showcase other detailed information. Each of the 4 major sections (middle buttons) compares India's performance against the world on the respective Socio-Economic factor. The last section highlights some of the major milestones and iconic landmarks in India over the last 75 years.<br>
+                    As you navigate through these pages, you will see a narrative along with the metric for India compared with the World.<br>
+                </p>
+                <h4>
+                    Messaging:
+                </h4>
+                <p>
+                    It is well known that India is still a developing country and for number of good reasons. Its large, diverse, was under British rule for close to 100 years, was under extreme poverty for decades. India has faced famines, major droughts, epidemics and natural calamities. But the country has overcome all these hindrences and showcased thier capabilities in Global platform. My narrative highlights how India's some major socio-economic factors are compared to the world.<br>
+                    My objective is to highlight some metrics that puts India at per with the rest of the world.
+                </p>
+                <h4>
+                    Narrative Structure: Interactive Slideshow
+                </h4>
+                <p>
+                    You can follow the above buttons from left to right to follow the "steps" as it goes to the next pages. This is
+                    interactive slideshow because there are "drill-down" pages to narrow down some information.
+                </p>
+                <h4>
+                    Visual Structure:
+                </h4>
+                <p>
+                    Each scene (each socio-economic metric above) has a line graph, and the structure is consistent across the pages. You will be able to understand the data from the texts on X and Y axis, descriptions in the title, tooltips and annotations. It would be easy to stay  focused on the presented data on each scene.<br>
+                    The same buttons are present in each scene, that will help you navigate through this whole presentation, and will give you a seamless experince from the left to right without getting lost in information.
+                </p>
+                <h4>
+                    Scenes:
+                </h4>
+                <p>
+                    Scenes contain 4 buttons on the top of the page to see the metrics' comparison. Home button will bring you at this page. Conslusion page contains some information that augments my thought.<br>
+                    These 4 scenes for metrics, follow a consistent format, with a single line chart at the top along with some narrative.
+                    The annotation template contains texts and pointers to pinpoint the location that I would like to emphasize in the line graph. The annotations especially support certain data points. For example, I used one to deliver the message where the growth was curbed due to impact of COVID in India. Some annotations change since the trends are changed and I would like to put emphasis on the increased or decreased values.
+                </p>
+                <h4>
+                    Parameters:
+                </h4>
+                <p>
+                    My parameters are variables, which is chart years in populations, and animated bar charts and top of
+                    options as slide numbers. Viewers can see the parameters on the top of each page.<br>
+                </p>
+                <h4>
+                    Triggers:
+                </h4>
+                <p>
+                    My triggers are used a connector to the next chart or page to change the parameters. My triggers are buttons and hovering over the bar graph to display the details information.
+                </p>
+            </div>
+        <hr> -->
+    </body>
 </html>
