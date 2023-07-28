@@ -13,8 +13,8 @@
     <body>
         <h1 align="center">U.S. Gun Violence From the 1980s to the 2020s</h1>
         <p align="left">Gun ownership in the United States is the highest in the world, and constitutionally protected by the Second Amendment to the United States Constitution. Firearms are widely used in the United States for self-defence, hunting, and recreational uses, such as target shooting.</p>
-        <p align="left">Source:<a href='https://www.kaggle.com/datasets/nidzsharma/us-mass-shootings-19822023' target="_blank" rel="noreferrer noopener">https://www.kaggle.com/datasets/nidzsharma/us-mass-shootings-19822023</a></p>
-        <div align="center">
+        <!-- <p align="left">Source:<a href='https://www.kaggle.com/datasets/nidzsharma/us-mass-shootings-19822023' target="_blank" rel="noreferrer noopener">https://www.kaggle.com/datasets/nidzsharma/us-mass-shootings-19822023</a></p> -->
+        <div align="left">
             <p>The buttons below will help you explore and understand some metrics of the number of individuals affected by gun violence in the United States across 5 decades.</p>
             <a href="index.html" class="other">Home</a>
             <a href="#" class="current">Fatalities</a>
@@ -22,59 +22,117 @@
             <a href="total_victims.html" class="other">Total Victims</a>
             <a href="conclusion.html" class="other">Conclusion</a>
         </div>
-        <!-- <hr>
-            <div>
-                <h4>
-                    Overview:
-                </h4>
-                <p>
-                    I have implemented 'Interactive Slideshow' as the narrative visualization structures.<br>
-                    You can click the buttons on the top to navigate to other pages that showcase other detailed information. Each of the 4 major sections (middle buttons) compares India's performance against the world on the respective Socio-Economic factor. The last section highlights some of the major milestones and iconic landmarks in India over the last 75 years.<br>
-                    As you navigate through these pages, you will see a narrative along with the metric for India compared with the World.<br>
-                </p>
-                <h4>
-                    Messaging:
-                </h4>
-                <p>
-                    It is well known that India is still a developing country and for number of good reasons. Its large, diverse, was under British rule for close to 100 years, was under extreme poverty for decades. India has faced famines, major droughts, epidemics and natural calamities. But the country has overcome all these hindrences and showcased thier capabilities in Global platform. My narrative highlights how India's some major socio-economic factors are compared to the world.<br>
-                    My objective is to highlight some metrics that puts India at per with the rest of the world.
-                </p>
-                <h4>
-                    Narrative Structure: Interactive Slideshow
-                </h4>
-                <p>
-                    You can follow the above buttons from left to right to follow the "steps" as it goes to the next pages. This is
-                    interactive slideshow because there are "drill-down" pages to narrow down some information.
-                </p>
-                <h4>
-                    Visual Structure:
-                </h4>
-                <p>
-                    Each scene (each socio-economic metric above) has a line graph, and the structure is consistent across the pages. You will be able to understand the data from the texts on X and Y axis, descriptions in the title, tooltips and annotations. It would be easy to stay  focused on the presented data on each scene.<br>
-                    The same buttons are present in each scene, that will help you navigate through this whole presentation, and will give you a seamless experince from the left to right without getting lost in information.
-                </p>
-                <h4>
-                    Scenes:
-                </h4>
-                <p>
-                    Scenes contain 4 buttons on the top of the page to see the metrics' comparison. Home button will bring you at this page. Conslusion page contains some information that augments my thought.<br>
-                    These 4 scenes for metrics, follow a consistent format, with a single line chart at the top along with some narrative.
-                    The annotation template contains texts and pointers to pinpoint the location that I would like to emphasize in the line graph. The annotations especially support certain data points. For example, I used one to deliver the message where the growth was curbed due to impact of COVID in India. Some annotations change since the trends are changed and I would like to put emphasis on the increased or decreased values.
-                </p>
-                <h4>
-                    Parameters:
-                </h4>
-                <p>
-                    My parameters are variables, which is chart years in populations, and animated bar charts and top of
-                    options as slide numbers. Viewers can see the parameters on the top of each page.<br>
-                </p>
-                <h4>
-                    Triggers:
-                </h4>
-                <p>
-                    My triggers are used a connector to the next chart or page to change the parameters. My triggers are buttons and hovering over the bar graph to display the details information.
-                </p>
-            </div>
-        <hr> -->
+
+        <h3>Fatalities Over Time</h3>
+        <p>This line chart shows the sum of fatalities over time.</p>
+            
+        <div id="fatalities"></div>
+        <div id="tooltip" opacity=0></div>
+
+        <script>
+        
+            // set the dimensions and margins of the graph
+            var margin = {top: 10, right: 30, bottom: 30, left: 60},
+                width = 660 - margin.left - margin.right,
+                height = 400 - margin.top - margin.bottom;
+            
+            // append the svg object to the body of the page
+            var svg = d3.select("#fatalities")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform",
+                        "translate(" + margin.left + "," + margin.top + ")");
+            
+            //Read the data
+            d3.csv("https://github.com/nithinnathan/nithinnathan.github.io/blob/c3b233d638921f09af2e02570f577d1c59f23b8d/fatalities.csv", function(data) {
+            
+                // group the data: I want to draw one line per group
+                // var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
+                // .key(function(d) { return d.Location;})
+                // .entries(data);
+                //document.getElementById("data").innerHTML = sumstat;
+                //console.log(sumstat);
+            
+                // Add X axis --> it is a date format
+                var x = d3.scaleLinear()
+                .domain(d3.extent(data, function(d) { return d.Year; }))
+                .range([ 0, width ]);
+                svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")))
+                ;
+            
+                // Add Y axis
+                var y = d3.scaleLinear()
+                .domain([50, d3.max(data, function(d) { return +d.Life_Exp; })])
+                .range([ height, 0 ]);
+                svg.append("g")
+                .call(d3.axisLeft(y).ticks(10));
+                    
+                // color palette
+                //var res = sumstat.map(function(d){ return d.key }) // list of group names
+                //console.log(res);
+                // var color = d3.scaleOrdinal()
+                // .domain(data)
+                // .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
+            
+                var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+                //var tooltip1 = d3.select('svg').select('#tooltip').attr("class", "toolTip");
+                //console.log(tooltip);
+                //console.log(tooltip1);
+            
+                // Draw the line
+                svg.selectAll(".line")
+                    .data(data)
+                    .enter()
+                    .append("path")
+                    .attr("fill", "none")
+                    // .attr("stroke", function(d){ return color(d.key) })
+                    .attr("stroke-dasharray", function(d,i){ return i })
+                    .attr("stroke-width", 2.5)
+                    .attr("d", function(d){
+                        return d3.line()
+                        .x(function(d) { return x(d.Year); })
+                        .y(function(d) { return y(+d.Fatalities); })
+                        (d.values)
+                    });
+                    // .on("mouseover", function (d,i) {
+                    // tooltip
+                    //     .style("left", d3.event.pageX - 50 + "px")
+                    //     .style("top", d3.event.pageY - 70 + "px")
+                    //     .style("display", "inline-block")
+                    //     .style("font-family", "Georgia")
+                    //     .style("font-size", "70%")
+                    //     .html(d.key + ": Year " + d.values[i]['Year'] + ": " + d.values[i]['Life_Exp']);
+                    //     //console.log(d.values);
+                    //     //console.log(d.values[i]);
+                    // })
+                    // .on("mouseout", function (d) { tooltip.style("display", "none"); })
+                    // ;
+                    
+                // //Legend
+                // const colDict = {India: '#e41a1c', World: '#377eb8' , Germany: '#4daf4a', United_Kingdom: '#984ea3', United_States: '#ff7f00'}
+                // var legend_keys = ["India", "World", "Germany", "United_Kingdom", "United_States"]
+            
+                // var lineLegend = svg.selectAll(".lineLegend").data(legend_keys)
+                //     .enter().append("g")
+                //     .attr("class","lineLegend")
+                //     .attr("transform", function (d,i) {
+                //             return "translate(" + width + "," + (i*20)+")";
+                //         });
+            
+                // lineLegend.append("text").text(function (d) {return d;})
+                //     .attr("transform", "translate(-200,250)"); //align texts with boxes
+            
+                // lineLegend.append("rect")
+                //     //.attr("fill", function (d) {return color(d.key); })
+                //     .attr("fill", d => colDict[d])
+                //     .attr("transform", "translate(-220,240)")
+                //     .attr("width", 10).attr("height", 10);
+            })
+        
+        </script>
     </body>
 </html>
