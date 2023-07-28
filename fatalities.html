@@ -11,7 +11,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.3.1/d3-annotation.min.js"></script>
     </head>
     <body>
-        <h1 align="center">U.S. Gun Violence From the 1980s to the 2020s</h1>
+        <!-- <h1 align="center">U.S. Gun Violence From the 1980s to the 2020s</h1>
         <p align="left">Gun ownership in the United States is the highest in the world, and constitutionally protected by the Second Amendment to the United States Constitution. Firearms are widely used in the United States for self-defence, hunting, and recreational uses, such as target shooting.</p>
         <div align="left">
             <p>The buttons below will help you explore and understand some metrics of the number of individuals affected by gun violence in the United States across 5 decades.</p>
@@ -26,7 +26,7 @@
         <p>This line chart shows the sum of fatalities over time.</p>
             
         <div id="fatalities"></div>
-        <div id="tooltip" opacity=0></div>
+        <div id="tooltip" opacity=0></div> -->
 
         <script>
         
@@ -47,7 +47,7 @@
                 var yAxis = d3.axisLeft(y);
                 var xAxis = d3.axisBottom(x);
 
-                var svg = d3.select('fatalities').append('svg')
+                var svg = d3.select('body').append('svg')
                             .attr('height','100%')
                             .attr('width','100%');
 
