@@ -32,6 +32,7 @@ shape-rendering: crispEdges;
 .link, .link:visited {
     color: black;
     display: inline-block;
+    padding: 0 2px;
 }
 
 /* .link:hover {
@@ -43,10 +44,12 @@ shape-rendering: crispEdges;
   background-color: lightgrey;
   color: black;
   padding: 8px 16px;
+  text-decoration: none;
 }
 
 .other {
   background-color: darkblue;
   color: white;
   padding: 8px 16px;
+  text-decoration: none;
 }

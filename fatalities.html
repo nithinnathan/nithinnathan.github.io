@@ -25,61 +25,118 @@
             <a href="total_victims.html" class="other">Total Victims</a>
             <a href="conclusion.html" class="other">Conclusion</a>
         </div>
-        <hr>
+
         <h3>Fatalities Over Time</h3>
         <p>This line chart shows the sum of fatalities over time.</p>
             
-        <!-- <div id="chart-container"></div>
+        <div id="#chart-container"></div>
         <script>
-            const margin = { top: 10, right: 30, bottom: 30, left: 60 }
-            const width = 660 - margin.left - margin.right;
-            const height = 400 - margin.top - margin.bottom;
 
-            const svg = d3.select("#chart-container")
-                            .append("svg")
-                                .attr("width", width + margin.left + margin.right)
-                                .attr("height", height + margin.top + margin.bottom)
-                            .append("g")
-                                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            //var parseDate = d3.timeParse("%m/%d/%Y");
+
+            var margin = {left: 50, right: 20, top: 20, bottom: 50 };
+
+            var width = 960 - margin.left - margin.right;
+            var height = 500 - margin.top - margin.bottom;
+
+            var max = 0;
+
+            var xNudge = 50;
+            var yNudge = 20;
+
+            //var minDate = new Date();
+            //var maxDate = new Date();
 
             d3.csv("https://raw.githubusercontent.com/nithinnathan/nithinnathan.github.io/master/fatalities.csv")
                 .row(function(d) { return { year: d.Year, fatalities: d.Fatalities } })
-                .get(function(error, data) {
-                
-                    var sumstat = d3.nest().entries(data);
-                    console.log(sumstat);
+                .get(function(error, rows) {
+                    
+                    maxFatalities = d3.max(rows, function(d) { return d.Fatalities; });
+                    minYear = d3.min(rows, function(d) {return d.Year; });
+                    maxYear = d3.max(rows, function(d) { return d.Year; });
 
-                    const x = d3.scaleLinear()
-                                .domain(d3.extent(data, d => d.Year))
-                                .range([0,width]);
-
-                    svg.append("g").attr("transform", "translate(0," + height + ")")
-                        .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")));
-                            
-                    const y = d3.scaleLinear()
-                                .domain([50, d3.max(data, function(d) { return +d.Fatalities; })])
+                    var y = d3.scaleLinear()
+                                .domain([0,maxFatalities])
                                 .range([height,0]);
 
-                    svg.append("g").call(d3.axisLeft(y).ticks(10));
+                    var x = d3.scaleTime()
+                                .domain([minYear,maxYear])
+                                .range([0,width]);
 
-                    // const line = d3.line()
-                    //                 .x(d => x(d.Year))
-                    //                 .y(d => y(+d.Fatalities));
+                    var yAxis = d3.axisLeft(y);
 
-                    // svg.selectAll(".line")
-                    //     .data(sumstat)
-                    //     .enter()
-                    //     .append("path")
-                    //     .attr("fill", "none")
-                    //     .attr("stroke", "steelblue")
-                    //     .attr("stroke-width", 2.5)
-                    //     .attr("d", function(d) {
-                    //         return d3.line()
-                    //             .x(function(d) { return x(d.Year); })
-                    //             .y(function(d) { return y(+d.Fatalities); })
-                    //             (d.values)});
-            });
+                    var xAxis = d3.axisBottom(x);
 
-        </script> -->
+                    var line = d3.line()
+                        .x(function(d){ return x(d.Year); })
+                        .y(function(d){ return y(d.Fatalities); })
+                        .curve(d3.curveCardinal);
+
+                    var svg = d3.select("#chart-container").append("svg").attr("id","svg").attr("height","100%").attr("width","100%");
+                    var chartGroup = svg.append("g").attr("class","chartGroup").attr("transform","translate("+xNudge+","+yNudge+")");
+
+                    chartGroup.append("path")
+                        .attr("class","line")
+                        .attr("d",function(d){ return line(rows); })
+
+                    chartGroup.append("g")
+                        .attr("class","axis x")
+                        .attr("transform","translate(0,"+height+")")
+                        .call(xAxis);
+
+                    chartGroup.append("g")
+                        .attr("class","axis y")
+                        .call(yAxis);
+                });
+            
+            // const margin = { top: 10, right: 30, bottom: 30, left: 60 },
+            //     width = 660 - margin.left - margin.right,
+            //     height = 400 - margin.top - margin.bottom;
+
+            // const svg = d3.select("#chart-container")
+            //                 .append("svg")
+            //                     .attr("width", width + margin.left + margin.right)
+            //                     .attr("height", height + margin.top + margin.bottom)
+            //                 .append("g")
+            //                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            // d3.csv("https://raw.githubusercontent.com/nithinnathan/nithinnathan.github.io/master/fatalities.csv")
+            //     .row(function(d) { return { year: d.Year, fatalities: d.Fatalities } })
+            //     .get(function(error, data) {
+                
+            //         var sumstat = d3.nest().entries(data);
+            //         console.log(sumstat);
+
+            //         const x = d3.scaleLinear()
+            //                     .domain([0,d3.extent(data, d => d.Year)])
+            //                     .range([0,width]);
+
+            //         svg.append("g").attr("transform", "translate(0," + height + ")")
+            //             .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")));
+                            
+            //         const y = d3.scaleLinear()
+            //                     .domain([50, d3.max(data, function(d) { return d.Fatalities; })])
+            //                     .range([height,0]);
+
+            //         svg.append("g").call(d3.axisLeft(y).ticks(10));
+
+            //         const line = d3.line()
+            //                         .x(d => x(d.Year))
+            //                         .y(d => y(d.Fatalities));
+
+            //         // svg.selectAll(".line")
+            //         //     .data(sumstat)
+            //         //     .enter()
+            //         //     .append("path")
+            //         //     .attr("fill", "none")
+            //         //     .attr("stroke", "steelblue")
+            //         //     .attr("stroke-width", 2.5)
+            //         //     .attr("d", function(d) {
+            //         //         return d3.line()
+            //         //             .x(function(d) { return x(d.Year); })
+            //         //             .y(function(d) { return y(+d.Fatalities); })
+            //         //             (d.values)});
+            // });
+        </script>
     </body>
 </html>
