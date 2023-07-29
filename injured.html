@@ -15,7 +15,8 @@
             Individuals with firearms find usage through various activities, such as self-defense, hunting, and target shooting.<br>
             Although there are several harmless use cases for firearms, there are many harmful ones as well, and in this narrative visualization you will be able to explore some other statistics that demonstrate the violence caused by individuals who own a firearm in America.<br>
         </p>
-        <p align="left">Source:<a href='https://www.kaggle.com/datasets/nidzsharma/us-mass-shootings-19822023' class="link" target="_blank" rel="noreferrer noopener"> https://www.kaggle.com/datasets/nidzsharma/us-mass-shootings-19822023</a></p>
+        <!-- <p align="left">Source:<a href='https://www.kaggle.com/datasets/nidzsharma/us-mass-shootings-19822023' class="link" target="_blank" rel="noreferrer noopener"> https://www.kaggle.com/datasets/nidzsharma/us-mass-shootings-19822023</a></p> -->
+        
         <div align="left">
             <p>The buttons below will help you explore and understand these metrics.</p>
             <a href="index.html" class="other">Home</a>
@@ -102,9 +103,9 @@
                         .style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
                         .style("display", "inline-block")
-                        .style("font-family", "Georgia")
+                        .style("font-family", "Helvetica")
                         .style("font-size", "70%")
-                        .html(d.key + ": Year " + d.values[i]['Year'] + ": " + d.values[i]['Life_Exp']);
+                        .html(d.key + ": Year " + d.values[i]['Year'] + ": " + d.values[i]['Injured']);
                         //console.log(d.values);
                         //console.log(d.values[i]);
                         })
