@@ -31,6 +31,7 @@
         <p>This line chart shows the sum of fatalities over time.</p>
             
         <div id="fatalities"></div>
+        <div id="tooltip"></div>
         <script>
 
             // set the dimensions and margins of the graph
@@ -99,15 +100,12 @@
                             (d.values)
                         })
                     .on("mouseover", function (d,i) {
-                        tooltip
-                        .style("left", d3.event.pageX - 50 + "px")
+                        tooltip.style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
                         .style("display", "inline-block")
                         .style("font-family", "Helvetica")
                         .style("font-size", "70%")
-                        .html(d.key + ": Year " + d.values[i]['Year'] + ": " + d.values[i]['Fatalities']);
-                        //console.log(d.values);
-                        //console.log(d.values[i]);
+                        .html("Total Fatalities: 1101");
                         })
                     .on("mouseout", function (d) { tooltip.style("display", "none"); });
                         
