@@ -72,17 +72,17 @@
                 svg.append("g")
                     .call(d3.axisLeft(y).ticks(10));
                         
-                // // color palette
-                // var res = sumstat.map(function(d){ return d.key }) // list of group names
-                // //console.log(res);
-                // var color = d3.scaleOrdinal()
-                //     .domain(res)
-                //     .range(['#999999'])
+                // color palette
+                var res = sumstat.map(function(d){ return d.key }) // list of group names
+                //console.log(res);
+                var color = d3.scaleOrdinal()
+                    .domain(res)
+                    .range(['#999999'])
 
-                // var tooltip = d3.select("body").append("div").attr("class", "toolTip");
-                // //console.log(tooltip);
+                var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+                //console.log(tooltip);
 
-                // Draw the line
+                //Draw the line
                 svg.selectAll(".line")
                     .data(sumstat)
                     .enter()
@@ -96,40 +96,40 @@
                             .x(function(d) { return x(d.Year); })
                             .y(function(d) { return y(+d.Fatalities); })
                             (d.values)
-                        });
-                    // .on("mouseover", function (d,i) {
-                    //     tooltip
-                    //     .style("left", d3.event.pageX - 50 + "px")
-                    //     .style("top", d3.event.pageY - 70 + "px")
-                    //     .style("display", "inline-block")
-                    //     .style("font-family", "Georgia")
-                    //     .style("font-size", "70%")
-                    //     .html(d.key + ": Year " + d.values[i]['Year'] + ": " + d.values[i]['Life_Exp']);
-                    //     //console.log(d.values);
-                    //     //console.log(d.values[i]);
-                    //     })
-                    //     .on("mouseout", function (d) { tooltip.style("display", "none"); })
-                    //     ;
+                        })
+                    .on("mouseover", function (d,i) {
+                        tooltip
+                        .style("left", d3.event.pageX - 50 + "px")
+                        .style("top", d3.event.pageY - 70 + "px")
+                        .style("display", "inline-block")
+                        .style("font-family", "Georgia")
+                        .style("font-size", "70%")
+                        .html(d.key + ": Year " + d.values[i]['Year'] + ": " + d.values[i]['Life_Exp']);
+                        //console.log(d.values);
+                        //console.log(d.values[i]);
+                        })
+                        .on("mouseout", function (d) { tooltip.style("display", "none"); })
+                        ;
                         
-                // //Legend
-                // const colDict = {United_States: '#ff7f00'}
-                // var legend_keys = ["United_States"]
+                //Legend
+                const colDict = {United_States: '#ff7f00'}
+                var legend_keys = ["United_States"]
 
-                //     var lineLegend = svg.selectAll(".lineLegend").data(legend_keys)
-                //         .enter().append("g")
-                //         .attr("class","lineLegend")
-                //         .attr("transform", function (d,i) {
-                //                 return "translate(" + width + "," + (i*20)+")";
-                //             });
+                    var lineLegend = svg.selectAll(".lineLegend").data(legend_keys)
+                        .enter().append("g")
+                        .attr("class","lineLegend")
+                        .attr("transform", function (d,i) {
+                                return "translate(" + width + "," + (i*20)+")";
+                            });
 
-                //     lineLegend.append("text").text(function (d) {return d;})
-                //         .attr("transform", "translate(-200,250)"); //align texts with boxes
+                    lineLegend.append("text").text(function (d) {return d;})
+                        .attr("transform", "translate(-200,250)"); //align texts with boxes
 
-                //     lineLegend.append("rect")
-                //         //.attr("fill", function (d) {return color(d.key); })
-                //         .attr("fill", d => colDict[d])
-                //         .attr("transform", "translate(-220,240)")
-                //         .attr("width", 10).attr("height", 10);
+                    lineLegend.append("rect")
+                        //.attr("fill", function (d) {return color(d.key); })
+                        .attr("fill", d => colDict[d])
+                        .attr("transform", "translate(-220,240)")
+                        .attr("width", 10).attr("height", 10);
                 })
         </script>
     </body>
