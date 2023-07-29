@@ -48,29 +48,31 @@
             .row(function(d) { return { year: d.Year, fatalities: d.Fatalities} })
             .get(function(error, data) {
 
-                // console.log(data);
+                //console.log(data);
 
-                // var sumstat = d3.nest()
-                //                 .key(function(d) { return d.Year; })
-                //                 .entries(data);
+                var sumstat = d3.nest().entries(data);
+                console.log(sumstat);
 
-                // console.log(sumstat);
+                var height = 400;
+                var width = 660;
 
-                // var height = 400;
-                // var width = 600;
+                var maxYear = d3.max(data, function(d) { return d.Year; });
+                var minYear = d3.min(data, function(d) { return d.Year; });
+                var maxFatalities = d3.max(data, function(d) { return d.Fatalities; });
 
-                // var maxYear = d3.max(data, function(d) { return d.Year; });
-                // var minYear = d3.min(data, function(d) { return d.Year; });
-                // var maxFatalities = d3.max(data, function(d) { return d.Fatalities; });
+                var x = d3.scaleLinear().domain([minYear,maxYear]).range([0,width]);
+                svg.append("g")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(d3.axisBottom(x));
 
-                // var y = d3.scaleLinear().domain([0,maxFatalities]).range([height,0]);
-                // var x = d3.scaleLinear().domain([minYear,maxYear]).range([0,width]);
+                var y = d3.scaleLinear().domain([0,maxFatalities]).range([height,0]);
+                svg.append("g")
+                    .call(d3.axisLeft(y));
 
-                // var yAxis = d3.axisLeft(y);
                 // var xAxis = d3.axisBottom(x);
+                // var yAxis = d3.axisLeft(y);
 
-                // var chartGroup = svg.append('g')
-                //                     .attr('transform','translate(50,50)');
+                // var chartGroup = svg.append('g').attr('transform','translate(50,50)');
 
                 // var line = d3.line()
                 //             .x(function(d) { return x(d.Year); })
@@ -79,68 +81,88 @@
                 // chartGroup.append('path')
                 //             .attr('d',line(data));
 
-                // group the data: I want to draw one line per group
-                var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
-                    .entries(data);
-                //document.getElementById("data").innerHTML = sumstat;
-                console.log(sumstat);
 
-                // Add X axis --> it is a date format
-                var x = d3.scaleLinear()
-                    .domain(d3.extent(data, function(d) { return d.Year; }))
-                    .range([ 0, width ]);
-                svg.append("g")
-                    .attr("transform", "translate(0," + height + ")")
-                    .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")))
-                    ;
-
-                // Add Y axis
-                var y = d3.scaleLinear()
-                    .domain([50, d3.max(data, function(d) { return +d.Fatalities; })])
-                    .range([ height, 0 ]);
-                svg.append("g")
-                    .call(d3.axisLeft(y).ticks(10));
-                        
-                // color palette
-                // var res = sumstat.map(function(d){ return d.key }) // list of group names
-                // //console.log(res);
-                // var color = d3.scaleOrdinal()
-                //     .domain(res)
-                //     .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
-
-                //var tooltip = d3.select("body").append("div").attr("class", "toolTip");
-                //var tooltip1 = d3.select('svg').select('#tooltip').attr("class", "toolTip");
-                //console.log(tooltip);
-                //console.log(tooltip1);
-
-                // Draw the line
                 svg.selectAll(".line")
                     .data(sumstat)
                     .enter()
                     .append("path")
                         .attr("fill", "none")
-                        .attr("stroke", function(d){ return color(d.key) })
+                        .attr("stroke", function(d) { return color(d.key); })
                         .attr("stroke-dasharray", function(d,i){ return i })
                         .attr("stroke-width", 2.5)
                         .attr("d", function(d){
                         return d3.line()
                             .x(function(d) { return x(d.Year); })
-                            .y(function(d) { return y(+d.Life_Exp); })
+                            .y(function(d) { return y(+d.Fatalities); })
                             (d.values)
-                        })
-                    .on("mouseover", function (d,i) {
-                        tooltip
-                        .style("left", d3.event.pageX - 50 + "px")
-                        .style("top", d3.event.pageY - 70 + "px")
-                        .style("display", "inline-block")
-                        .style("font-family", "Georgia")
-                        .style("font-size", "70%")
-                        .html(d.key + ": Year " + d.values[i]['Year'] + ": " + d.values[i]['Fatalities']);
-                        //console.log(d.values);
-                        //console.log(d.values[i]);
-                        })
-                        .on("mouseout", function (d) { tooltip.style("display", "none"); })
-                        ;
+                        });
+
+
+
+
+
+                // // group the data: I want to draw one line per group
+                // var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
+                //     .entries(data);
+                // //document.getElementById("data").innerHTML = sumstat;
+                // console.log(sumstat);
+
+                // // Add X axis --> it is a date format
+                // var x = d3.scaleLinear()
+                //     .domain(d3.extent(data, function(d) { return d.Year; }))
+                //     .range([ 0, width ]);
+                // svg.append("g")
+                //     .attr("transform", "translate(0," + height + ")")
+                //     .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")))
+                //     ;
+
+                // // Add Y axis
+                // var y = d3.scaleLinear()
+                //     .domain([50, d3.max(data, function(d) { return +d.Fatalities; })])
+                //     .range([ height, 0 ]);
+                // svg.append("g")
+                //     .call(d3.axisLeft(y).ticks(10));
+                        
+                // // color palette
+                // // var res = sumstat.map(function(d){ return d.key }) // list of group names
+                // // //console.log(res);
+                // // var color = d3.scaleOrdinal()
+                // //     .domain(res)
+                // //     .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
+
+                // //var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+                // //var tooltip1 = d3.select('svg').select('#tooltip').attr("class", "toolTip");
+                // //console.log(tooltip);
+                // //console.log(tooltip1);
+
+                // // Draw the line
+                // svg.selectAll(".line")
+                //     .data(sumstat)
+                //     .enter()
+                //     .append("path")
+                //         .attr("fill", "none")
+                //         .attr("stroke", function(d){ return color(d.key) })
+                //         .attr("stroke-dasharray", function(d,i){ return i })
+                //         .attr("stroke-width", 2.5)
+                //         .attr("d", function(d){
+                //         return d3.line()
+                //             .x(function(d) { return x(d.Year); })
+                //             .y(function(d) { return y(+d.Life_Exp); })
+                //             (d.values)
+                //         });
+                    // .on("mouseover", function (d,i) {
+                    //     tooltip
+                    //     .style("left", d3.event.pageX - 50 + "px")
+                    //     .style("top", d3.event.pageY - 70 + "px")
+                    //     .style("display", "inline-block")
+                    //     .style("font-family", "Georgia")
+                    //     .style("font-size", "70%")
+                    //     .html(d.key + ": Year " + d.values[i]['Year'] + ": " + d.values[i]['Fatalities']);
+                    //     //console.log(d.values);
+                    //     //console.log(d.values[i]);
+                    //     })
+                    //     .on("mouseout", function (d) { tooltip.style("display", "none"); })
+                    //     ;
                         
                 //Legend
                 // const colDict = {India: '#e41a1c', World: '#377eb8' , Germany: '#4daf4a', United_Kingdom: '#984ea3', United_States: '#ff7f00'}
