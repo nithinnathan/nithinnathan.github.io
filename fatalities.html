@@ -52,7 +52,7 @@
                                 .range([0,width]);
 
                     svg.append("g").attr("transform", "translate(0," + height + ")")
-                        .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")).render());
+                        .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")));
                             
                     const y = d3.scaleLinear()
                                 .domain([0, d3.max(sumstat, d => d.Fatalities)])
