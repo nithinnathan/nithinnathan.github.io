@@ -76,7 +76,7 @@
 
                 // var line = d3.line()
                 //             .x(function(d) { return x(d.Year); })
-                //             .y(function(d) { return x(d.Fatalities); });
+                //             .y(function(d) { return y(d.Fatalities); });
 
                 // chartGroup.append('path')
                 //             .attr('d',line(data));
@@ -87,7 +87,7 @@
                     .enter()
                     .append("path")
                         .attr("fill", "none")
-                        .attr("stroke", function(d) { return color(d.key); })
+                        //.attr("stroke", function(d) { return color(d.key); })
                         .attr("stroke-dasharray", function(d,i){ return i })
                         .attr("stroke-width", 2.5)
                         .attr("d", function(d){
