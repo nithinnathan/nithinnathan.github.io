@@ -7,7 +7,6 @@
         <meta name="author" content="Nithin Nathan">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="mystyle.css">
-        <script src="https://d3js.org/d3.v4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.3.1/d3-annotation.min.js"></script>
     </head>
     <body>
@@ -25,167 +24,10 @@
         <h3>Fatalities Over Time</h3>
         <p>This line chart shows the sum of fatalities over time.</p>
             
-        <div id="fatalities"></div>
-        <div id="tooltip" opacity=0></div>
+        <div id="chart-container"></div>
 
-        <script>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script src="scriptstart.js"></script>
 
-            // set the dimensions and margins of the graph
-            var margin = {top: 10, right: 30, bottom: 30, left: 60},
-                width = 660 - margin.left - margin.right,
-                height = 400 - margin.top - margin.bottom;
-
-            // append the svg object to the body of the page
-            var svg = d3.select("#fatalities")
-            .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-                .attr("transform",
-                    "translate(" + margin.left + "," + margin.top + ")");
-        
-            d3.csv("https://raw.githubusercontent.com/nithinnathan/nithinnathan.github.io/master/fatalities.csv")
-            .row(function(d) { return { year: d.Year, fatalities: d.Fatalities} })
-            .get(function(error, data) {
-
-                //console.log(data);
-
-                var sumstat = d3.nest().entries(data);
-                console.log(sumstat);
-
-                var height = 400;
-                var width = 660;
-
-                var maxYear = d3.max(data, function(d) { return d.Year; });
-                var minYear = d3.min(data, function(d) { return d.Year; });
-                var maxFatalities = d3.max(data, function(d) { return d.Fatalities; });
-
-                var x = d3.scaleLinear().domain([minYear,maxYear]).range([0,width]);
-                svg.append("g")
-                    .attr("transform", "translate(0," + height + ")")
-                    .call(d3.axisBottom(x));
-
-                var y = d3.scaleLinear().domain([0,maxFatalities]).range([height,0]);
-                svg.append("g")
-                    .call(d3.axisLeft(y));
-
-                // var xAxis = d3.axisBottom(x);
-                // var yAxis = d3.axisLeft(y);
-
-                // var chartGroup = svg.append('g').attr('transform','translate(50,50)');
-
-                // var line = d3.line()
-                //             .x(function(d) { return x(d.Year); })
-                //             .y(function(d) { return y(d.Fatalities); });
-
-                // chartGroup.append('path')
-                //             .attr('d',line(data));
-
-
-                svg.selectAll(".line")
-                    .data(sumstat)
-                    .enter()
-                    .append("path")
-                        .attr("fill", "none")
-                        //.attr("stroke", function(d) { return color(d.key); })
-                        .attr("stroke-dasharray", function(d,i){ return i })
-                        .attr("stroke-width", 2.5)
-                        .attr("d", function(d){
-                        return d3.line()
-                            .x(function(d) { return x(d.Year); })
-                            .y(function(d) { return y(+d.Fatalities); })
-                            (d.values)
-                        });
-
-
-
-
-
-                // // group the data: I want to draw one line per group
-                // var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
-                //     .entries(data);
-                // //document.getElementById("data").innerHTML = sumstat;
-                // console.log(sumstat);
-
-                // // Add X axis --> it is a date format
-                // var x = d3.scaleLinear()
-                //     .domain(d3.extent(data, function(d) { return d.Year; }))
-                //     .range([ 0, width ]);
-                // svg.append("g")
-                //     .attr("transform", "translate(0," + height + ")")
-                //     .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")))
-                //     ;
-
-                // // Add Y axis
-                // var y = d3.scaleLinear()
-                //     .domain([50, d3.max(data, function(d) { return +d.Fatalities; })])
-                //     .range([ height, 0 ]);
-                // svg.append("g")
-                //     .call(d3.axisLeft(y).ticks(10));
-                        
-                // // color palette
-                // // var res = sumstat.map(function(d){ return d.key }) // list of group names
-                // // //console.log(res);
-                // // var color = d3.scaleOrdinal()
-                // //     .domain(res)
-                // //     .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
-
-                // //var tooltip = d3.select("body").append("div").attr("class", "toolTip");
-                // //var tooltip1 = d3.select('svg').select('#tooltip').attr("class", "toolTip");
-                // //console.log(tooltip);
-                // //console.log(tooltip1);
-
-                // // Draw the line
-                // svg.selectAll(".line")
-                //     .data(sumstat)
-                //     .enter()
-                //     .append("path")
-                //         .attr("fill", "none")
-                //         .attr("stroke", function(d){ return color(d.key) })
-                //         .attr("stroke-dasharray", function(d,i){ return i })
-                //         .attr("stroke-width", 2.5)
-                //         .attr("d", function(d){
-                //         return d3.line()
-                //             .x(function(d) { return x(d.Year); })
-                //             .y(function(d) { return y(+d.Life_Exp); })
-                //             (d.values)
-                //         });
-                    // .on("mouseover", function (d,i) {
-                    //     tooltip
-                    //     .style("left", d3.event.pageX - 50 + "px")
-                    //     .style("top", d3.event.pageY - 70 + "px")
-                    //     .style("display", "inline-block")
-                    //     .style("font-family", "Georgia")
-                    //     .style("font-size", "70%")
-                    //     .html(d.key + ": Year " + d.values[i]['Year'] + ": " + d.values[i]['Fatalities']);
-                    //     //console.log(d.values);
-                    //     //console.log(d.values[i]);
-                    //     })
-                    //     .on("mouseout", function (d) { tooltip.style("display", "none"); })
-                    //     ;
-                        
-                //Legend
-                // const colDict = {India: '#e41a1c', World: '#377eb8' , Germany: '#4daf4a', United_Kingdom: '#984ea3', United_States: '#ff7f00'}
-                // var legend_keys = ["India", "World", "Germany", "United_Kingdom", "United_States"]
-
-                //     var lineLegend = svg.selectAll(".lineLegend").data(legend_keys)
-                //         .enter().append("g")
-                //         .attr("class","lineLegend")
-                //         .attr("transform", function (d,i) {
-                //                 return "translate(" + width + "," + (i*20)+")";
-                //             });
-
-                //     lineLegend.append("text").text(function (d) {return d;})
-                //         .attr("transform", "translate(-200,250)"); //align texts with boxes
-
-                //     lineLegend.append("rect")
-                //         //.attr("fill", function (d) {return color(d.key); })
-                //         .attr("fill", d => colDict[d])
-                //         .attr("transform", "translate(-220,240)")
-                //         .attr("width", 10).attr("height", 10);
-                
-            });
-        
-        </script>
     </body>
 </html>
