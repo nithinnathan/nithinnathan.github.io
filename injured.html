@@ -66,7 +66,7 @@
 
                 // Add Y axis
                 var y = d3.scaleLinear()
-                    .domain([0,d3.max(data, function(d) { return +d.Fatalities; })])
+                    .domain([0,d3.max(data, function(d) { return +d.Injured; })])
                     .range([height,0]);
                     
                 svg.append("g")
@@ -94,7 +94,7 @@
                         .attr("d", function(d){
                         return d3.line()
                             .x(function(d) { return x(d.Year); })
-                            .y(function(d) { return y(+d.Fatalities); })
+                            .y(function(d) { return y(+d.Injured); })
                             (d.values)
                         })
                     .on("mouseover", function (d,i) {
