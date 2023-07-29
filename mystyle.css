@@ -6,9 +6,9 @@
     fill: rgb(180, 138, 21);
 }
 
-/* .axis--x path {
+.axis--x path {
     display: none;
-} */
+}
 
 .toolTip {
     position: absolute;
@@ -32,12 +32,12 @@
     font: 10px sans-serif;
   }
   
-  /* .axis path,
+  .axis path,
   .axis line {
     fill: none;
     stroke: #000;
     shape-rendering: crispEdges;
-  } */
+  }
   
 a {
   text-decoration: none;
@@ -74,8 +74,8 @@ body {
   font-family: "Helvetica";
 }
 
-.path {
+/* .path {
     stroke: blue;
     stroke-width: 2px;
     fill: none;
-}
+} */
