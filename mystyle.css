@@ -41,41 +41,29 @@
   
 a {
   text-decoration: none;
-  letter-spacing: 5px;
   display: inline-block;
   padding: 8px 16px;
 }
 
 a:hover {
   background-color: #ddd;
-  letter-spacing: 5px;
   color: black;
 }
 
-.current {
+.currentpage {
   background-color: #f1f1f1;
-  letter-spacing: 5px;
   color: black;
 }
 
-.other {
-  background-color: #0c04aa;
-  letter-spacing: 5px;
+.otherpage {
+  background-color: #04AA6D;
   color: white;
 }
 
 .round {
-  border: 2px solid red;
-  border-radius: 12px;
-  padding: 5px;
+  border-radius: 50%;
 }
 
 body {
-  font-family: "Helvetica";
+  font-family: Verdana, sans-serif;
 }
-
-/* .path {
-    stroke: blue;
-    stroke-width: 2px;
-    fill: none;
-} */

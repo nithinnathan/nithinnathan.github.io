@@ -30,8 +30,8 @@
         <div id="chart-container"></div>
         <script>
             const margin = { top: 10, right: 30, bottom: 30, left: 60 }
-            const width = 500 - margin.left - margin.right;
-            const height = 300 - margin.top - margin.bottom;
+            const width = 660 - margin.left - margin.right;
+            const height = 400 - margin.top - margin.bottom;
 
             const svg = d3.select("#chart-container")
                             .append("svg")
@@ -48,14 +48,14 @@
                     console.log(sumstat);
 
                     const x = d3.scaleLinear()
-                                .domain(d3.extent(sumstat, d => d.Year))
+                                .domain(d3.extent(data, d => d.Year))
                                 .range([0,width]);
 
                     svg.append("g").attr("transform", "translate(0," + height + ")")
                         .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")));
                             
                     const y = d3.scaleLinear()
-                                .domain([0, d3.max(sumstat, d => d.Fatalities)])
+                                .domain([50, d3.max(data, function(d) { return +d.Fatalities; })])
                                 .range([height,0]);
 
                     svg.append("g").call(d3.axisLeft(y).ticks(10));
