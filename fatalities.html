@@ -81,10 +81,9 @@
 
                 // group the data: I want to draw one line per group
                 var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
-                    .key(function(d) { return d.Year;})
                     .entries(data);
                 //document.getElementById("data").innerHTML = sumstat;
-                //console.log(sumstat);
+                console.log(sumstat);
 
                 // Add X axis --> it is a date format
                 var x = d3.scaleLinear()
@@ -103,13 +102,13 @@
                     .call(d3.axisLeft(y).ticks(10));
                         
                 // color palette
-                var res = sumstat.map(function(d){ return d.key }) // list of group names
-                //console.log(res);
-                var color = d3.scaleOrdinal()
-                    .domain(res)
-                    .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
+                // var res = sumstat.map(function(d){ return d.key }) // list of group names
+                // //console.log(res);
+                // var color = d3.scaleOrdinal()
+                //     .domain(res)
+                //     .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
 
-                var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+                //var tooltip = d3.select("body").append("div").attr("class", "toolTip");
                 //var tooltip1 = d3.select('svg').select('#tooltip').attr("class", "toolTip");
                 //console.log(tooltip);
                 //console.log(tooltip1);
@@ -144,24 +143,24 @@
                         ;
                         
                 //Legend
-                const colDict = {India: '#e41a1c', World: '#377eb8' , Germany: '#4daf4a', United_Kingdom: '#984ea3', United_States: '#ff7f00'}
-                var legend_keys = ["India", "World", "Germany", "United_Kingdom", "United_States"]
+                // const colDict = {India: '#e41a1c', World: '#377eb8' , Germany: '#4daf4a', United_Kingdom: '#984ea3', United_States: '#ff7f00'}
+                // var legend_keys = ["India", "World", "Germany", "United_Kingdom", "United_States"]
 
-                    var lineLegend = svg.selectAll(".lineLegend").data(legend_keys)
-                        .enter().append("g")
-                        .attr("class","lineLegend")
-                        .attr("transform", function (d,i) {
-                                return "translate(" + width + "," + (i*20)+")";
-                            });
+                //     var lineLegend = svg.selectAll(".lineLegend").data(legend_keys)
+                //         .enter().append("g")
+                //         .attr("class","lineLegend")
+                //         .attr("transform", function (d,i) {
+                //                 return "translate(" + width + "," + (i*20)+")";
+                //             });
 
-                    lineLegend.append("text").text(function (d) {return d;})
-                        .attr("transform", "translate(-200,250)"); //align texts with boxes
+                //     lineLegend.append("text").text(function (d) {return d;})
+                //         .attr("transform", "translate(-200,250)"); //align texts with boxes
 
-                    lineLegend.append("rect")
-                        //.attr("fill", function (d) {return color(d.key); })
-                        .attr("fill", d => colDict[d])
-                        .attr("transform", "translate(-220,240)")
-                        .attr("width", 10).attr("height", 10);
+                //     lineLegend.append("rect")
+                //         //.attr("fill", function (d) {return color(d.key); })
+                //         .attr("fill", d => colDict[d])
+                //         .attr("transform", "translate(-220,240)")
+                //         .attr("width", 10).attr("height", 10);
                 
             });
         
