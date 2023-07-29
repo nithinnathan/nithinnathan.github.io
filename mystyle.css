@@ -28,24 +28,23 @@ fill: none;
 stroke: #000;
 shape-rendering: crispEdges;
 } */
-  
-a {
-  text-decoration: none;
-  letter-spacing: 5px;
-  display: inline-block;
-  padding: 8px 16px;
+
+.link {
+    color: black;
+    display: inline-block;
 }
 
-a:hover {
-  background-color: #ddd;
-  letter-spacing: 5px;
-  color: black;
+.link:hover {
+    color: black;
+    display: inline-block;
 }
 
 .current {
   background-color: lightgrey;
+  border-radius: 4px;
 }
 
 .other {
   background-color: lightskyblue;
+  border-radius: 4px;
 }
