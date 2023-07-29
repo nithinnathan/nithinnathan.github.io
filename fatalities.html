@@ -29,23 +29,22 @@
             
         <div id="chart-container"></div>
         <script>
-            const margin = { top: 70, right: 30, bottom: 40, left: 80 }
-            const width = 1200 - margin.left - margin.right;
-            const height = 500 - margin.top - margin.bottom;
+            const margin = { top: 10, right: 30, bottom: 30, left: 60 }
+            const width = 660 - margin.left - margin.right;
+            const height = 400 - margin.top - margin.bottom;
 
             const svg = d3.select("chart-container")
-                        .append("svg")
-                            .attr("width", width + margin.left + margin.right)
-                            .attr("height", height + margin.top + margin.bottom)
-                        .append("g")
-                            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                            .append("svg")
+                                .attr("width", width + margin.left + margin.right)
+                                .attr("height", height + margin.top + margin.bottom)
+                            .append("g")
+                                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
             d3.csv("https://raw.githubusercontent.com/nithinnathan/nithinnathan.github.io/master/fatalities.csv")
                 .row(function(d) { return { year: d.Year, fatalities: d.Fatalities } })
                 .get(function(error, data) {
                 
                     var sumstat = d3.nest().entries(data);
-                    //console.log(data);
                     console.log(sumstat);
 
                     const x = d3.scaleLinear()
@@ -58,7 +57,7 @@
                                 .domain([0, d3.max(sumstat, d => d.Fatalities)])
                                 .range([height,0]);
 
-                    //svg.call(d3.axisLeft(y).ticks(10));
+                    svg.append("g").call(d3.axisLeft(y).ticks(10));
             });
 
         </script>
