@@ -2,7 +2,7 @@ head, body {
     font-family: "Helvetica";
   }
   
-.axis--x path {
+/* .axis--x path {
     display: none;
 }
 
@@ -27,7 +27,7 @@ font: 10px sans-serif;
 fill: none;
 stroke: #000;
 shape-rendering: crispEdges;
-}
+} */
   
 a {
   text-decoration: none;
@@ -43,19 +43,9 @@ a:hover {
 }
 
 .current {
-  background-color: #f1f1f1;
-  letter-spacing: 5px;
-  color: black;
-  border: 2px solid red;
-  border-radius: 12px;
-  padding: 5px;
+  background-color: lightgrey;
 }
 
 .other {
-  background-color: #E4DDD3;
-  letter-spacing: 5px;
-  color: black;
-  border: 2px solid red;
-  border-radius: 12px;
-  padding: 5px;
+  background-color: lightskyblue;
 }
