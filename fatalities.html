@@ -21,9 +21,12 @@
             <a href="total_victims.html" class="other">Total Victims</a>
         </div>
 
-
         <h3>Fatalities Over Time</h3>
-        <p>This line chart shows the sum of fatalities over time.</p>
+        <p>
+            A fatality is defined as <i>"an occurrence of death by accident, in war, or from disease"</i>.<br>
+            In the case of gun violence, fatalities refer to individuals who passed away due to gun-related events.<br>
+            This line chart shows the sum of fatalities over time.<br>
+        </p>
             
         <div id="fatalities"></div>
         <div id="tooltip"></div>
@@ -100,7 +103,7 @@
                         .style("display", "inline-block")
                         .style("font-family", "Helvetica")
                         .style("font-size", "70%")
-                        .html("Sum of Fatalities: 1101");
+                        .html("Sum of Fatalities: 1100");
                         })
                     .on("mouseout", function (d) { tooltip.style("display", "none"); });
                         
