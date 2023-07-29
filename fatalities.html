@@ -45,14 +45,20 @@
                 .get(function(error, data) {
                 
                     var sumstat = d3.nest().entries(data);
-                    console.log(data);
+                    //console.log(data);
                     console.log(sumstat);
 
                     const x = d3.scaleLinear()
+                                .domain(d3.extent(sumstat, d => d.Year))
                                 .range([0,width]);
+
+                    svg.append("g").call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")));
                             
                     const y = d3.scaleLinear()
+                                .domain([0, d3.max(sumstat, d => d.Fatalities)])
                                 .range([height,0]);
+
+                    //svg.call(d3.axisLeft(y).ticks(10));
             });
 
         </script>
