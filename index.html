@@ -10,24 +10,69 @@
         <script src="https://d3js.org/d3.v4.min.js"></script>
     </head>
     <body>
-        <h1 align="center">U.S. Gun Violence (1980s-2020s)</h1>
-        <p align="left">The United States is the home of the highest rate of gun ownership worldwide due to safeguarding by the Second Amendment to the U.S. Constitution.<br>
-            Individuals with firearms find usage through various activities, such as self-defense, hunting, and target shooting.<br>
-            Although there are several harmless use cases for firearms, there are many harmful ones as well, and in this narrative visualization you will be able to explore some other statistics that demonstrate the violence caused by individuals who own a firearm in America.<br>
-        </p>
-        <!-- <p align="left">Source:<a href='https://www.kaggle.com/datasets/nidzsharma/us-mass-shootings-19822023' class="link" target="_blank" rel="noreferrer noopener"> https://www.kaggle.com/datasets/nidzsharma/us-mass-shootings-19822023</a></p> -->
         
-        <div align="left">
+        <h1 align="center">U.S. Gun Violence (1980s-2020s)</h1>
+        
+        <div align="center">
             <p>The buttons below will help you explore and understand these metrics.</p>
-            <a href="#" class="current">Home</a>
-            <a href="about.html" class="other">About</a>
+            <a href="#" class="current">About</a>
             <a href="fatalities.html" class="other">Fatalities</a>
             <a href="injured.html" class="other">Injured</a>
             <a href="total_victims.html" class="other">Total Victims</a>
-            <a href="conclusion.html" class="other">Conclusion</a>
         </div>
 
-        <h3>Home</h3>
-        <p>This is the home page.</p>
+        <h3>Abstract:</h3>
+        <p>
+            The United States is the home of the highest rate of gun ownership worldwide due to safeguarding by the Second Amendment to the U.S. Constitution.<br>
+            Individuals with firearms find usage through various activities, such as self-defense, hunting, and target shooting.<br>
+            Although there are several harmless use cases for firearms, there are many harmful ones as well, and in this narrative visualization you will be able to<br>
+            explore some other statistics that demonstrate the violence caused by individuals who own a firearm in America.<br>
+        </p>
+
+        <h3>Visualization Structure:</h3>
+        <p>
+            My narrative visualization follows the structure of an "Interactive Slideshow".<br>
+            To visually see other statistics, click one of the buttons located above.<br>
+            You, the user, will be allowed to explore the slides presented.<br>
+            In order to gain additional detail, you may hover over the line charts on each slide and see a little tooltip popup displayed underneath the chart.
+            The overall theme is consistent across all slides of the visualization in order to help with understanding.<br>
+        </p>
+
+        <h3>Technical Details:</h3>
+
+        <h4>1. Scenes</h4>
+        <p>
+            All scenes in this slideshow follow the same template for visual consistency.<br>
+            Each scene is separated from one another through differentiated webpages.<br>
+            The scenes contain line charts and other text that will help the user understand a trend over time.<br>
+        </p>
+
+        <h4>2. Annotations</h4>
+        <p>
+            The annotations in this narrative visualization also follow a theme to help with visual consistency.<br>
+            The annotations used show points of emphasis in that trend that will require the user's attention.<br>
+            Additionally, the annotations in this visualization do appear part of the scene and do not require any mouseover events.<br>
+        </p>
+
+        <h4>3. Parameters</h4>
+        <p>
+            The parameters in this narrative visualization are the buttons above.<br>
+            By selecting a different button, the user will be taken to different slides in the slideshow.<br>
+            The starting point for this visualization is this current page, the "About" slide.
+        </p>
+
+        <h4>4. Triggers</h4>
+        <p>
+            The triggers in this narrative visualization connect any actions or changes made to the parameters to affect the overall state of the visualization.<br>
+            Specifically, they are the buttons presented above that take you to a different slide when clicked.<br>
+            Additionally, there are tooltips that can be seen when you hover over the chart on each page.<br>
+        </p>
+
+        <h4>5. Libraries</h4>
+        <p>
+            The only libraries allowed for this assignment were the "d3", "d3-annotation", and "topoJSON Client".<br>
+            No other libraries were allowed.<br>
+            Inspiration for this visualization was taken from across the web.<br>
+        </p>
     </body>
 </html>
