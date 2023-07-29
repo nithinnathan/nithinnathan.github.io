@@ -1,11 +1,7 @@
-.bar {
-    fill: steelblue;
-}
-
-.bar:hover {
-    fill: rgb(180, 138, 21);
-}
-
+head, body {
+    font-family: "Helvetica";
+  }
+  
 .axis--x path {
     display: none;
 }
@@ -20,24 +16,18 @@
     padding: 14px;
     text-align: center;
 }
-.bar.positive {
-    fill: steelblue;
-  }
+
   
-  .bar.negative {
-    fill: brown;
-  }
-  
-  .axis text {
-    font: 10px sans-serif;
-  }
-  
-  .axis path,
-  .axis line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
-  }
+.axis text {
+font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+fill: none;
+stroke: #000;
+shape-rendering: crispEdges;
+}
   
 a {
   text-decoration: none;
@@ -56,26 +46,16 @@ a:hover {
   background-color: #f1f1f1;
   letter-spacing: 5px;
   color: black;
-}
-
-.other {
-  background-color: #0c04aa;
-  letter-spacing: 5px;
-  color: white;
-}
-
-.round {
   border: 2px solid red;
   border-radius: 12px;
   padding: 5px;
 }
 
-body {
-  font-family: "Helvetica";
+.other {
+  background-color: #E4DDD3;
+  letter-spacing: 5px;
+  color: black;
+  border: 2px solid red;
+  border-radius: 12px;
+  padding: 5px;
 }
-
-/* .path {
-    stroke: blue;
-    stroke-width: 2px;
-    fill: none;
-} */
