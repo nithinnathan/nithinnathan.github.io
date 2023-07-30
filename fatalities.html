@@ -9,10 +9,8 @@
         <link rel="stylesheet" href="mystyle.css">
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js"></script>
-
     </head>
     <body>
-        
         <h1 align="center">U.S. Gun Violence (1980s-2020s)</h1>
         
         <div align="center">
@@ -35,6 +33,7 @@
         <div id="fatalities"></div>
         <div id="tooltip"></div>
         <script>
+
             var margin = {top: 0, right: 30, bottom: 30, left: 30},
                 width = 660 - margin.left - margin.right,
                 height = 660 - margin.top - margin.bottom;
@@ -68,8 +67,6 @@
                 svg.append("g")
                     .call(d3.axisLeft(y).ticks(10));
 
-                
-
                 svg.selectAll(".line")
                     .data(nested_data)
                     .enter()
@@ -85,8 +82,8 @@
                             (d.values)
                         })
                     .on("mouseover", function (d,i) {
-                        tooltip.style("left", d3.event.pageX - 50 + "px")
-                        .style("top", d3.event.pageY - 70 + "px")
+                        tooltip.style("left", d3.event.pageX + "px")
+                        .style("top", d3.event.pageY + "px")
                         .style("display", "inline-block")
                         .style("font-family", "Helvetica")
                         .style("font-size", "70%")
