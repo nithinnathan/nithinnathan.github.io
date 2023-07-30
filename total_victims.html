@@ -32,7 +32,6 @@
         <div id="total_victims"></div>
         <div id="tooltip"></div>
         <script>
-
             var margin = {top: 0, right: 30, bottom: 30, left: 30},
                 width = 660 - margin.left - margin.right,
                 height = 660 - margin.top - margin.bottom;
@@ -47,7 +46,7 @@
 
             d3.csv("https://raw.githubusercontent.com/nithinnathan/nithinnathan.github.io/master/total_victims.csv", function(data) {
 
-                var sumstat = d3.nest()
+                var nested_data = d3.nest()
                     .key(function(d) { return d.Location; })
                     .entries(data);
 
@@ -66,10 +65,8 @@
                 svg.append("g")
                     .call(d3.axisLeft(y).ticks(10));
 
-                var tooltip = d3.select("body").append("div").attr("class", "toolTip");
-
                 svg.selectAll(".line")
-                    .data(sumstat)
+                    .data(nested_data)
                     .enter()
                     .append("path")
                         .attr("fill", "none")
@@ -83,9 +80,8 @@
                             (d.values)
                         })
                     .on("mouseover", function (d,i) {
-                        tooltip
-                        .style("left", d3.event.pageX - 50 + "px")
-                        .style("top", d3.event.pageY - 70 + "px")
+                        tooltip.style("left", d3.event.pageX + "px")
+                        .style("top", d3.event.pageY + "px")
                         .style("display", "inline-block")
                         .style("font-family", "Helvetica")
                         .style("font-size", "70%")
@@ -94,26 +90,27 @@
                     .on("mouseout", function (d) { tooltip.style("display", "none"); });
 
                 const annotations = [
-                    {
-                        note: {
-                            title: "Highest Amount (2017)",
-                            wrap: 150
-                        },
-                        type: d3.annotationLabel,
-                        subject: {
-                            radius: 10,
-                            radiusPadding: 0
-                        },
-                        color: ["#FF8C00"],
-                        x: 512,
-                        y: 1,
-                        dy: 1,
-                        dx: -300
-                    }
-                ];
+                {
+                    note: {
+                        title: "Highest Amount of Total Victims (2017)",
+                        wrap: 150
+                    },
+                    type: d3.annotationLabel,
+                    subject: {
+                        radius: 10,
+                        radiusPadding: 0
+                    },
+                    color: ["#FF8C00"],
+                    x: 512,
+                    y: 1,
+                    dy: 1,
+                    dx: -300
+                }];
 
                 const makeAnnotations = d3.annotation().annotations(annotations);
                 svg.append("g").call(makeAnnotations);
+
+                var tooltip = d3.select("body").append("div").attr("class", "tooltip");
             })
         </script>
     </body>
