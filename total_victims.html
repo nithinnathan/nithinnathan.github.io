@@ -15,18 +15,20 @@
         <h1 align="center">U.S. Gun Violence (1980s-2020s)</h1>
         
         <div align="center">
-            <p>The buttons below will help you explore and understand these metrics.</p>
+            <p>The buttons below will help you explore and understand statistics behind gun violence in the United States.</p>
             <a href="index.html" class="other">About</a>
             <a href="fatalities.html" class="other">Fatalities</a>
             <a href="injured.html" class="other">Injured</a>
             <a href="#" class="current">Total Victims</a>
         </div>
 
-        <h3>Total Victims Over Time</h3>
+        <h2>Total Victims</h2>
         <p>
             An injury is defined as <i>"a person harmed, injured, or killed as a result of a crime, accident, or other event or action"</i>.<br>
-            In the case of gun violence, a victim is any individual that has been affected by gun-related events (both passed away and injuries).<br>
-            This line chart shows the sum of total victims over time.<br>
+            In the case of gun violence, a victim is any individual that has been affected by gun-related events (both passed away and injured).<br>
+            The below line chart shows the sum of total victims injured over time.<br>
+            The X-axis represents the different years while the Y-axis represents sum of total victims for that year.<br>
+            In order to view the total sum of victims injured from the 1980s to 2020s, hover over any part of the chart.<br>
         </p>
 
         <div id="total_victims"></div>
@@ -85,7 +87,7 @@
                         .style("display", "inline-block")
                         .style("font-family", "Helvetica")
                         .style("font-size", "70%")
-                        .html("Sum of Total Victims: 2686");
+                        .html("Total Sum of Victims (1980s-2020s): 2686");
                         })
                     .on("mouseout", function (d) { tooltip.style("display", "none"); });
 

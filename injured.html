@@ -16,18 +16,20 @@
         <h1 align="center">U.S. Gun Violence (1980s-2020s)</h1>
         
         <div align="center">
-            <p>The buttons below will help you explore and understand these metrics.</p>
+            <p>The buttons below will help you explore and understand statistics behind gun violence in the United States.</p>
             <a href="index.html" class="other">About</a>
             <a href="fatalities.html" class="other">Fatalities</a>
             <a href="#" class="current">Injured</a>
             <a href="total_victims.html" class="other">Total Victims</a>
         </div>
 
-        <h3>Injured Over Time</h3>
+        <h2>Injured</h2>
         <p>
             An injury is defined as <i>"any physiological damage to living tissue caused by immediate stress"</i>.<br>
             In the case of gun violence, injuries refer to individuals affected by gun-related events but not resulting in fatalities.<br>
-            This line chart shows the sum of individuals injured over time.<br>
+            The below line chart shows the sum of individuals injured over time.<br>
+            The X-axis represents the different years while the Y-axis represents sum of individuals injured for that year.<br>
+            In order to view the total sum of individuals injured from the 1980s to 2020s, hover over any part of the chart.<br>
         </p>
 
         <div id="injured"></div>
@@ -86,7 +88,7 @@
                         .style("display", "inline-block")
                         .style("font-family", "Helvetica")
                         .style("font-size", "70%")
-                        .html("Sum of Injured: 1586");
+                        .html("Total Sum of Injured (1980s-2020s): 1586");
                         })
                     .on("mouseout", function (d) { tooltip.style("display", "none"); });
 

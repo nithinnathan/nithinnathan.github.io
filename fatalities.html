@@ -16,18 +16,20 @@
         <h1 align="center">U.S. Gun Violence (1980s-2020s)</h1>
         
         <div align="center">
-            <p>The buttons below will help you explore and understand these metrics.</p>
+            <p>The buttons below will help you explore and understand statistics behind gun violence in the United States.</p>
             <a href="index.html" class="other">About</a>
             <a href="#" class="current">Fatalities</a>
             <a href="injured.html" class="other">Injured</a>
             <a href="total_victims.html" class="other">Total Victims</a>
         </div>
 
-        <h3>Fatalities Over Time</h3>
+        <h2>Fatalities</h2>
         <p>
             A fatality is defined as <i>"an occurrence of death by accident, in war, or from disease"</i>.<br>
             In the case of gun violence, fatalities refer to individuals who passed away due to gun-related events.<br>
-            This line chart shows the sum of fatalities over time.<br>
+            The below line chart shows the sum of fatalities over time.<br>
+            The X-axis represents the different years while the Y-axis represents sum of fatalities for that year.<br>
+            In order to view the total sum of fatalities from the 1980s to 2020s, hover over any part of the chart.<br>
         </p>
             
         <div id="fatalities"></div>
@@ -88,7 +90,7 @@
                         .style("display", "inline-block")
                         .style("font-family", "Helvetica")
                         .style("font-size", "70%")
-                        .html("Sum of Fatalities: 1100");
+                        .html("Total Sum of Fatalities (1980s-2020s): 1100");
                         })
                     .on("mouseout", function (d) { tooltip.style("display", "none"); });
 
