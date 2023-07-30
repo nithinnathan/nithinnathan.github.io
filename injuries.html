@@ -14,7 +14,7 @@
         <h1 align="center">U.S. Gun Violence (1980s-2020s)</h1>
         
         <div align="center">
-            <p>Use the buttons below to explore and understand statistics behind gun violence in the United States.</p>
+            <p>Click through the buttons below to explore and understand statistics behind gun violence in the United States.</p>
             <a href="index.html" class="other">About</a>
             <a href="fatalities.html" class="other">Fatalities</a>
             <a href="#" class="current">Injuries</a>
@@ -30,7 +30,7 @@
             In order to view the total sum of injuries from the 1980s to 2020s, hover over any part of the chart.<br>
         </p>
 
-        <div id="injured"></div>
+        <div id="injuries"></div>
         <div id="tooltip"></div>
         <script>
             
@@ -38,7 +38,7 @@
                 width = 660 - margin.left - margin.right,
                 height = 660 - margin.top - margin.bottom;
 
-            var svg = d3.select("#injured")
+            var svg = d3.select("#injuries")
             .append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
