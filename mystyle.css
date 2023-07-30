@@ -2,50 +2,19 @@ head, body {
     font-family: "Helvetica";
   }
   
-/* .axis--x path {
-    display: none;
-}
-
-.toolTip {
-    position: absolute;
-    display: none;
-    min-width: 80px;
-    height: auto;
-    background: none repeat scroll 0 0 #ffffff;
-    border: 1px solid #6F257F;
-    padding: 14px;
-    text-align: center;
-}
-
-  
-.axis text {
-font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-fill: none;
-stroke: #000;
-shape-rendering: crispEdges;
-} */
-
 .link, .link:visited {
     color: black;
     display: inline-block;
     padding: 2px 0;
 }
 
-/* .link:hover {
-    color: black;
-    display: inline-block;
-} */
-
 .current {
-  background-color: lightgrey;
-  color: black;
+  background-color: #FF8C00;
+  color: white;
   padding: 8px 16px;
   text-decoration: none;
   border-radius: 12px;
+  font-weight: bold;
 }
 
 .other {
@@ -54,4 +23,5 @@ shape-rendering: crispEdges;
   padding: 8px 16px;
   text-decoration: none;
   border-radius: 12px;
+  font-weight: bold;
 }

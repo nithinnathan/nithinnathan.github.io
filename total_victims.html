@@ -8,6 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="mystyle.css">
         <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js"></script>
     </head>
     <body>
         
@@ -23,20 +24,19 @@
 
         <h3>Total Victims Over Time</h3>
         <p>
-            An injury is defined as <i>"a person harmed, injured, or killed as a result of a crime, accident, or other event or action."</i>.<br>
+            An injury is defined as <i>"a person harmed, injured, or killed as a result of a crime, accident, or other event or action"</i>.<br>
             In the case of gun violence, a victim is any individual that has been affected by gun-related events (both passed away and injuries).<br>
             This line chart shows the sum of total victims over time.<br>
         </p>
 
         <div id="total_victims"></div>
+        <div id="tooltip"></div>
         <script>
 
-            // set the dimensions and margins of the graph
             var margin = {top: 0, right: 30, bottom: 30, left: 30},
                 width = 660 - margin.left - margin.right,
                 height = 660 - margin.top - margin.bottom;
 
-            // append the svg object to the body of the page
             var svg = d3.select("#total_victims")
             .append("svg")
                 .attr("width", width + margin.left + margin.right)
@@ -45,16 +45,12 @@
                 .attr("transform",
                     "translate(" + margin.left + "," + margin.top + ")");
 
-            //Read the data
             d3.csv("https://raw.githubusercontent.com/nithinnathan/nithinnathan.github.io/master/total_victims.csv", function(data) {
 
-                // group the data: I want to draw one line per group
-                var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
+                var sumstat = d3.nest()
                     .key(function(d) { return d.Location; })
                     .entries(data);
-                //console.log(sumstat);
 
-                // Add X axis --> it is a date format
                 var x = d3.scaleLinear()
                     .domain(d3.extent(data, function(d) { return d.Year; }))
                     .range([0,width]);
@@ -63,25 +59,15 @@
                     .attr("transform", "translate(0," + height + ")")
                     .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")));
 
-                // Add Y axis
                 var y = d3.scaleLinear()
                     .domain([0,d3.max(data, function(d) { return +d.Total_Victims; })])
                     .range([height,0]);
                     
                 svg.append("g")
                     .call(d3.axisLeft(y).ticks(10));
-                        
-                // color palette
-                var res = sumstat.map(function(d){ return d.key }) // list of group names
-                //console.log(res);
-                var color = d3.scaleOrdinal()
-                    .domain(res)
-                    .range(['#999999'])
 
                 var tooltip = d3.select("body").append("div").attr("class", "toolTip");
-                //console.log(tooltip);
 
-                //Draw the line
                 svg.selectAll(".line")
                     .data(sumstat)
                     .enter()
@@ -89,7 +75,7 @@
                         .attr("fill", "none")
                         .attr("stroke", "darkblue")
                         .attr("stroke-dasharray", function(d,i) { return i; })
-                        .attr("stroke-width", 2.5)
+                        .attr("stroke-width", 2)
                         .attr("d", function(d){
                         return d3.line()
                             .x(function(d) { return x(d.Year); })
@@ -106,26 +92,28 @@
                         .html("Sum of Total Victims: 2686");
                         })
                     .on("mouseout", function (d) { tooltip.style("display", "none"); });
-                        
-                // //Legend
-                // const colDict = {United_States: '#ff7f00'}
-                // var legend_keys = ["United_States"]
 
-                //     var lineLegend = svg.selectAll(".lineLegend").data(legend_keys)
-                //         .enter().append("g")
-                //         .attr("class","lineLegend")
-                //         .attr("transform", function (d,i) {
-                //                 return "translate(" + width + "," + (i*20)+")";
-                //             });
+                const annotations = [
+                    {
+                        note: {
+                            title: "Highest Amount (2017)",
+                            wrap: 150
+                        },
+                        type: d3.annotationLabel,
+                        subject: {
+                            radius: 10,
+                            radiusPadding: 0
+                        },
+                        color: ["#FF8C00"],
+                        x: 512,
+                        y: 1,
+                        dy: 1,
+                        dx: -300
+                    }
+                ];
 
-                //     lineLegend.append("text").text(function (d) {return d;})
-                //         .attr("transform", "translate(-200,250)"); //align texts with boxes
-
-                //     lineLegend.append("rect")
-                //         //.attr("fill", function (d) {return color(d.key); })
-                //         .attr("fill", d => colDict[d])
-                //         .attr("transform", "translate(-220,240)")
-                //         .attr("width", 10).attr("height", 10);
+                const makeAnnotations = d3.annotation().annotations(annotations);
+                svg.append("g").call(makeAnnotations);
             })
         </script>
     </body>
